@@ -1,0 +1,96 @@
+Version: 2.0
+Alternatives: &alternatives
+# Here, we list all the alternatives, together with their attributes. 
+# We can use these attributes later in the file when defining 
+# preferenceFunctions. The attributes can be quantitative or 
+# qualitative.
+  Haier_3-drzwiowa_HTR5719ENPT:
+      pojemnosc_uzytkowa_chlodziarki: 310
+      pojemnosc_uzytkowa_zamrazarki: 140
+      poziom_halasu: 32
+      Cena: 3999
+  Sharp_SJ-BA05DMXWF-EU:
+      pojemnosc_uzytkowa_chlodziarki: 195
+      pojemnosc_uzytkowa_zamrazarki: 75
+      poziom_halasu: 16
+      Cena: 1689
+  LG_GBB92MCACP:
+      pojemnosc_uzytkowa_chlodziarki: 6.15
+      pojemnosc_uzytkowa_zamrazarki: 4      
+      poziom_halasu: 48
+      Cena: 2999
+  Beko_B3RCNA344HXB:
+      pojemnosc_uzytkowa_chlodziarki: 6.76
+      pojemnosc_uzytkowa_zamrazarki: 12
+      poziom_halasu: 50
+      Cena: 4949
+  Samsung_Bespoke_RB38A7B5E22:
+      pojemnosc_uzytkowa_chlodziarki: 6.67
+      pojemnosc_uzytkowa_zamrazarki: 4
+      poziom_halasu: 48
+      Cena: 1699
+  Amica_FK2515.4UTX:
+      pojemnosc_uzytkowa_chlodziarki: 6.5
+      pojemnosc_uzytkowa_zamrazarki: 12
+      poziom_halasu: 40
+      Cena: 2399
+  Bosch_KGN49XIEA:
+      pojemnosc_uzytkowa_chlodziarki: 330
+      pojemnosc_uzytkowa_zamrazarki: 108
+      poziom_halasu: 48
+      Cena: 3099
+  Sharp_SJ-BB05DTXLF-EU:
+      pojemnosc_uzytkowa_chlodziarki: 204
+      pojemnosc_uzytkowa_zamrazarki: 84
+      poziom_halasu: 13
+      Cena: 1449
+  Amica_FK2695:
+      pojemnosc_uzytkowa_chlodziarki: 161
+      pojemnosc_uzytkowa_zamrazarki: 70
+      poziom_halasu: 48
+      Cena: 1999   	
+  Samsung_RB34T635EBN:
+      pojemnosc_uzytkowa_chlodziarki: 227
+      pojemnosc_uzytkowa_zamrazarki: 114
+      poziom_halasu: 48
+      Cena: 2599	  
+#
+# End of Alternatives Section
+#####################################
+# Goal Section
+#
+Goal:
+# A Goal HAS preferences (within-level comparison) and HAS Children (items in level)
+  name: Wybor najlepszej lodowki
+  preferences:
+    pairwise:
+      - [wydajnosc, jakosc, 1]
+      - [wydajnosc, styl, 9]
+      - [wydajnosc, koszt, 7]
+      - [jakosc, koszt, 2]
+      - [styl, koszt, 5]
+      - [jakosc, styl, 8]
+  children: 
+    wydajnosc:
+      preferences:
+        pairwiseFunction:
+          function(a2, a1) max(a1$pojemnosc_uzytkowa_zamrazarki, a2$pojemnosc_uzytkowa_zamrazarki)
+      children: *alternatives
+    jakosc:
+      preferences:
+        pairwiseFunction:
+          function(a2, a1) min(a1$poziom_halasu, a2$pojemnosc_uzytkowa_chlodziarki)
+      children: *alternatives
+    styl:
+      preferences:
+        pairwiseFunction:
+          function(a2, a1) min(a1$pojemnosc_uzytkowa_chlodziarki, a2$pojemnosc_uzytkowa_chlodziarki)
+      children: *alternatives
+    koszt:
+      preferences:
+        pairwiseFunction:
+          function(a2, a1) min(a1$Cena, a2$Cena)
+      children: *alternatives 
+#
+# End of Goal Section
+#####################################
